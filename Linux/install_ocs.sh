@@ -1,46 +1,37 @@
 #!/bin/bash
 
+TAR_FILE="$(pwd)/Ocsinventory-Unix-Agent-2.10.4.tar.gz"
 OCS_SERVER="http://IP_OCS/ocsinventory"
 TAG="$(hostname)"
-TAR_FILE="Ocsinventory-Unix-Agent-2.10.4.tar.gz"
+CFG_DIR="/etc/ocsinventory"
+CFG_FILE="$CFG_DIR/ocsinventory-agent.cfg"
 
-# Salir si ya está instalado
-if command -v ocsinventory-agent >/dev/null 2>&1; then
-    echo "OCS ya instalado"
-    exit 0
+if command -v ocsinventory-agent > /dev/null 2>&1; then
+        exit 0
 fi
 
-# Verificar archivo
-if [ ! -f "$TAR_FILE" ]; then
-    echo "No se encuentra $TAR_FILE"
-    exit 1
-fi
+apt update -y
+apt install -y perl make gcc libwww-perl libxml-simple-perl \
+               libcompress-zlib-perl libnet-ip-perl \
+               libdigest-md5-perl libnet-i-perl
 
-# Instalar dependencias
-if [ -f /etc/debian_version ]; then
-    apt update -y
-    apt install -y perl make gcc libwww-perl libxml-simple-perl \
-                   libcompress-zlib-perl libnet-ip-perl \
-                   libdigest-md5-perl libnet-ssleay-perl
-elif [ -f /etc/redhat-release ]; then
-    yum install -y perl make gcc perl-libwww-perl perl-XML-Simple \
-                   perl-Compress-Zlib perl-Net-IP perl-Digest-MD5 \
-                   perl-Net-SSLeay
-else
-    echo "Distro no soportada"
-    exit 1
-fi
+tar -xzf "$TAR_FILE" || exit 1
+OCS_DIR=$(tar -tzf "$TAR_FILE" | head -1 | cut -d/ -f1)
+cd "$OCS_DIR" || exit 1
 
-# Extraer
-tar -xf "$TAR_FILE"
-cd Ocsinventory-Unix-Agent-* || exit 1
+mkdir -p /etc/ocsinventory
+cat <<EOF >/etc/ocsinventory/ocsinventory-agent.cfg
+server=https://IP_OCS/ocsinventory
+EOF
 
-# Instalar sin preguntas
-perl Makefile.PL --server="$OCS_SERVER" --tag="$TAG" --silent
+perl Makefile.PL
 make
 make install
 
-# Activar servicio y enviar inventario
-systemctl enable ocsinventory-agent 2>/dev/null
-systemctl restart ocsinventory-agent 2>/dev/null
+mkdir -p "$CFG_DIR"
+cat > "$CFG_FILE" <<EOF
+server = $OCS_SERVER
+tag = $TAG
+EOF
+
 ocsinventory-agent
