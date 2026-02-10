@@ -1,0 +1,15 @@
+Instalación
+cd /home/usuario
+chmod +x install_ocs.sh
+sudo ./install_ocs.sh
+
+Verificar 
+which ocsinventory-agent
+
+Desinstalación 
+cd /home/usuario
+chmod +x remove_ocs.sh
+sudo ./remove_ocs.sh
+
+Verificar
+which ocsinventory-agent
