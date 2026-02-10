@@ -2,7 +2,7 @@
 
 OCS_SERVER="http://IP_OCS/ocsinventory"
 TAG="$(hostname)"
-TAR_FILE="Ocsinventory-Unix-Agent-2.10.2.tar"
+TAR_FILE="Ocsinventory-Unix-Agent-2.10.4.tar"
 
 # Salir si ya está instalado
 if command -v ocsinventory-agent >/dev/null 2>&1; then
