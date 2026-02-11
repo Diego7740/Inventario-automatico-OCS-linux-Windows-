@@ -1,5 +1,5 @@
 Instalación
-cd /home/usuario
+cd Download/
 chmod +x install_ocs.sh
 sudo ./install_ocs.sh
 
@@ -7,7 +7,7 @@ Verificar
 which ocsinventory-agent
 
 Desinstalación 
-cd /home/usuario
+cd Download
 chmod +x remove_ocs.sh
 sudo ./remove_ocs.sh
 
