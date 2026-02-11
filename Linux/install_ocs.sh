@@ -14,6 +14,7 @@ apt update -y
 apt install -y perl make gcc libwww-perl libxml-simple-perl \
                libcompress-zlib-perl libnet-ip-perl \
                libdigest-md5-perl libnet-i-perl
+apt install -y libxml-simple-perl
 
 tar -xzf "$TAR_FILE" || exit 1
 OCS_DIR=$(tar -tzf "$TAR_FILE" | head -1 | cut -d/ -f1)
