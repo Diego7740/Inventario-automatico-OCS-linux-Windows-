@@ -7,7 +7,7 @@ Verificar
 which ocsinventory-agent
 
 Desinstalación 
-cd Download
+cd Download/
 chmod +x remove_ocs.sh
 sudo ./remove_ocs.sh
 
