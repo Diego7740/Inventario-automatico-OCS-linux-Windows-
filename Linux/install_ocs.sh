@@ -11,7 +11,7 @@ if command -v ocsinventory-agent > /dev/null 2>&1; then
 fi
 
 apt update -y
-apt install -y perl make gcc libwww-perl libxml-simple-perl \
+apt install -y perl make gcc libwww-perl \
                libcompress-zlib-perl libnet-ip-perl \
                libdigest-md5-perl libnet-i-perl
 apt install -y libxml-simple-perl
