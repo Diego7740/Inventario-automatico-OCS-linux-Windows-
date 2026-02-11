@@ -24,6 +24,7 @@ cat <<EOF >/etc/ocsinventory/ocsinventory-agent.cfg
 server=https://IP_OCS/ocsinventory
 EOF
 
+export PERL_MM_USE_DEFAULT=1
 perl Makefile.PL
 make
 make install
