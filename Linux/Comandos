@@ -13,3 +13,5 @@ sudo ./remove_ocs.sh
 
 Verificar
 which ocsinventory-agent
+
+sed -i 's/\r$//' install_ocs.sh
